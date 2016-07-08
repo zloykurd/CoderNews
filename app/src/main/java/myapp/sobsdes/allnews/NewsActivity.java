@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import myapp.sobsdes.allnews.news_fragments.News24Fragment;
 import myapp.sobsdes.allnews.news_fragments.VbFragment;
 
 public class NewsActivity extends AppCompatActivity
@@ -32,7 +33,7 @@ public class NewsActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-      //  ListView(ListView) findViewById(R.id.listView);
+        //  ListView(ListView) findViewById(R.id.listView);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -117,7 +118,7 @@ public class NewsActivity extends AppCompatActivity
 
 
         if (id == R.id.nav_camera) {
-            ftrans.replace(R.id.container, new VbFragment());
+            ftrans.replace(R.id.container, new News24Fragment());
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -125,6 +126,7 @@ public class NewsActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         }
+        ftrans.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

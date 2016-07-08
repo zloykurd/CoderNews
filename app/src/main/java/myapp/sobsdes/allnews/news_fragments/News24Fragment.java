@@ -35,14 +35,12 @@ public class News24Fragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        /*/list = (ListView) getActivity().findViewById(myapp.sobsdes.allnews.R.id.listView);
+      list = (ListView) getActivity().findViewById(myapp.sobsdes.allnews.R.id.listView);
 
         adapter = new LazyImageLoadNewsAdapter(getActivity(), getData(),
                 getActivity().getApplicationContext());// mStrings
-        list.setAdapter(adapter);*/
+        list.setAdapter(adapter);
 
-
-        getData();
 
     }
 
