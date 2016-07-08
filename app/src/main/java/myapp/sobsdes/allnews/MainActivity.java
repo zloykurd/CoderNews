@@ -29,6 +29,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private onbuttonclickHttpPost mTask = null;
+    int counter =1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,22 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-
-
-
-
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if (mTask != null
-                && mTask.getStatus() != onbuttonclickHttpPost.Status.FINISHED) {
-            mTask.cancel(true);
-            mTask = null;
-        }
-    }
 
     /********/
     public class onbuttonclickHttpPost extends AsyncTask<String, Void, Void> {
@@ -102,15 +90,29 @@ public class MainActivity extends AppCompatActivity {
             byte[] result = null;
             String str = "";
 
-            HttpClient httpclient = new DefaultHttpClient();
 
-            HttpPost httppost = new HttpPost(
+            HttpPost httppost24kg = new HttpPost(
                     "http://24.kg/rss/all/");
+            HttpPost httppostvbkg = new HttpPost(
+                    "http://www.vb.kg/?rss");
+            HttpPost httppostZanoza = new HttpPost(
+                    "http://zanoza.kg/?rss");
+            HttpPost httppostVesti = new HttpPost(
+                    "http://vesti.kg/index.php?option=com_k2&view=itemlist&format=feed");
+
+
+            downloadAllNews(httppost24kg);
+            downloadAllNews(httppostvbkg);
+            downloadAllNews(httppostZanoza);
+            downloadAllNews(httppostVesti);
+            return null;
+        }
+
+        public void downloadAllNews(HttpPost hp) {
+            HttpClient httpclient = new DefaultHttpClient();
             NewsDatabase db = new NewsDatabase(MainActivity.this);
-
-
             try {
-                HttpResponse response = httpclient.execute(httppost);
+                HttpResponse response = httpclient.execute(hp);
                 StatusLine statusLine = response.getStatusLine();
                 String responseStr = EntityUtils.toString(response.getEntity());
 
@@ -162,10 +164,6 @@ public class MainActivity extends AppCompatActivity {
                                     .item(0);
                             NodeList thrdNm = thrdNmElmnt.getChildNodes();
 
-                            NodeList frNmElmntLst = fstElmnt
-                                    .getElementsByTagName("comments");
-                            Element frNmElmnt = (Element) frNmElmntLst.item(0);
-                            NodeList frNm = frNmElmnt.getChildNodes();
 
                             NodeList fvNmElmntLst = fstElmnt
                                     .getElementsByTagName("description");
@@ -184,28 +182,71 @@ public class MainActivity extends AppCompatActivity {
                             NodeList sevenNm = sevenNmElmnt.getChildNodes();
                             String t;
 
-                            if ( ((Node) fstNm.item(0))
-                                    .getNodeValue() !=null)   {
-                               t = ((Node) fstNm.item(0))
+                            if (((Node) fstNm.item(0))
+                                    .getNodeValue() != null) {
+                                t = ((Node) fstNm.item(0))
                                         .getNodeValue().toString();
-                            }
-                            else {
+                            } else {
                                 t = "";
                             }
+//ДЗ
+//if == 1..2..3..44..
+                            if (counter ==1){
+                                News newspro = new News(
+                                        t,
+                                        ((Node) sixNm.item(0)).getNodeValue()
+                                                .toString(),
+                                        "",//изображение
+                                        "",//desc
+                                        "",//категория
+                                        "24.kg"//source
+                                );
+                                Log.d("MainAct", newspro.toString());
+                                db.addNews(newspro); // добавить счетчик
+                            }
+                            if (counter ==2){
+                                News newspro = new News(
+                                        t,
+                                        ((Node) sixNm.item(0)).getNodeValue()
+                                                .toString(),
+                                        "",//изображение
+                                        "",//desc
+                                        "",//категория
+                                        "vb.kg"//source
+                                );
+                                Log.d("MainAct", newspro.toString());
+                                db.addNews(newspro); // добавить счетчик
+                            }
+                            if (counter ==3){
+                                News newspro = new News(
+                                        t,
+                                        ((Node) sixNm.item(0)).getNodeValue()
+                                                .toString(),
+                                        "",//изображение
+                                        "",//desc
+                                        "",//категория
+                                        "zanoza.kg"//source
+                                );
+                                Log.d("MainAct", newspro.toString());
+                                db.addNews(newspro); // добавить счетчик
+                            }
+
+                            if (counter ==4){
+                                News newspro = new News(
+                                        t,
+                                        ((Node) sixNm.item(0)).getNodeValue()
+                                                .toString(),
+                                        "",//изображение
+                                        "",//desc
+                                        "",//категория
+                                        "vesti.kg"//source
+                                );
+                                Log.d("MainAct", newspro.toString());
+                                db.addNews(newspro); // добавить счетчик
+                            }
 
 
 
-                            News newspro = new News(
-                                   t,
-                                    ((Node) sixNm.item(0)).getNodeValue()
-                                            .toString(),
-                                    "",//изображение
-                                    "",//desc
-                                    "",//категория
-                                    "24.kg"//source
-                            );
-                            Log.d("MainAct", newspro.toString());
-                            db.addNews(newspro);
                         }
 
                     }
@@ -219,8 +260,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (ClientProtocolException e) {
             } catch (IOException e) {
             }
-
-            return null;
+            counter++;
         }
 
         /**

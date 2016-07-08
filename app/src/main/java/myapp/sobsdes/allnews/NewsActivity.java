@@ -120,7 +120,7 @@ public class NewsActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             ftrans.replace(R.id.container, new News24Fragment());
         } else if (id == R.id.nav_gallery) {
-
+            ftrans.replace(R.id.container, new VbFragment());
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
