@@ -21,6 +21,8 @@ public class OneNewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_one_news);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
         setimage = (ImageView) findViewById(R.id.newsBigImage);
         settextv1 = (TextView) findViewById(R.id.newsText);
         settextv2 = (TextView) findViewById(R.id.newsBigDate);
@@ -28,10 +30,12 @@ public class OneNewsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         //String inimg = intent.getStringExtra("img");
-        String intitle = intent.getStringExtra("title");
-        String indate = intent.getStringExtra("date");
+        String intitle = intent.getStringExtra("n_title");
+        String indate = intent.getStringExtra("n_date");
+        String news_source = intent.getStringExtra("n_source");
         //setimage.setImageDrawable(inimg);
-        settextv1.setText(intitle);
+        getSupportActionBar().setTitle(intitle);
+        settextv1.setText(news_source);
         settextv2.setText(indate);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -107,24 +107,26 @@ public class LazyImageLoadNewsAdapter extends BaseAdapter implements
 		}
 
 		/******** Set Item Click Listner for LayoutInflater for each row ***********/
-		vi.setOnClickListener(new OnItemClickListener(position));
+		vi.setOnClickListener(new OnItemClickListener(item));
 		return vi;
 	}
 
 	/********* Called when Item click in ListView ************/
 	private class OnItemClickListener implements OnClickListener {
-		private int mPosition;
+		private News item;
 
-		OnItemClickListener(int position) {
-			mPosition = position;
+		OnItemClickListener(News n) {
+			item = n;
 		}
 
 		@Override
 		public void onClick(View arg0) {
 			// Toast.makeText(activity, "Toast", Toast.LENGTH_SHORT).show();
 			Intent myIntent = new Intent(mContext, OneNewsActivity.class);
-			myIntent.putExtra("mPosition", String.valueOf(mPosition));
-			Log.d(LOG_TAG, "mPosition " + mPosition);
+			myIntent.putExtra("n_title",item.getNews_title());
+			myIntent.putExtra("n_date",item.getNews_date());
+			myIntent.putExtra("n_source",item.getNews_source());
+
 			myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			mContext.startActivity(myIntent);
 
