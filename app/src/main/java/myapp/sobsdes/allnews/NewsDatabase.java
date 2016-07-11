@@ -50,14 +50,11 @@ public class NewsDatabase extends SQLiteOpenHelper {
 
     public List<News> getAllNews() {
         List<News> noteList = new ArrayList<News>();
-
         String selectQuery = "SELECT * FROM NEWS ORDER BY id DESC";
         SQLiteDatabase db = this.getReadableDatabase();
-
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-
                 News note = new News();
                 note.setNews_id(Integer.valueOf(cursor.getString(0)));
                 note.setNews_title(cursor.getString(1));
